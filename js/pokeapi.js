@@ -46,9 +46,13 @@ const wrapPokemons = async (baseDatos) => {
     myDiv.setAttribute("class", "wrapImg");
     myDiv.appendChild(myPokeImg);
 
-    myPokeImg.setAttribute("src", png);
+    myPokeImg.setAttribute("src", "./styles/img/purepng.com-pokeballpokeballdevicepokemon-ballpokemon-capture-ball-17015278258688k78u.png");
     myPokeImg.setAttribute("class", "pokemonWrapImages");
     myDiv.classList.add("magictime", "tinUpIn");
+    setTimeout(function(){
+
+      myPokeImg.setAttribute("src", png);
+    }, 1100);
     let myPokeName = document.createElement("p");
     myPokeName.setAttribute("class", "myPokeName");
     myDiv.appendChild(myPokeName);
@@ -62,6 +66,7 @@ const wrapPokemons = async (baseDatos) => {
     Category: ${stats.category}
     `;
     myDiv.classList.add(stats.category);
+
   }
 };
 
@@ -82,6 +87,7 @@ const pokedexPantalla = async (nombre, allPokeApi) => {
     let myPokedexImg = document.createElement("img");
     let png = await getIMG(result);
     myPokedexImg.setAttribute("src", png);
+    myPokedexImg.classList.add("magictime","vanishIn")
     pokedexDivImg.appendChild(myPokedexImg);
 
     let stats = await getStats(result); // no puedo conseguir el map

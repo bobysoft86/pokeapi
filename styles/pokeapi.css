@@ -15,10 +15,11 @@ body {
   background-color: #f7f0d2;
 }
 .pokemonWrap {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    justify-content: space-evenly;
 
   .pokemonWrapImages {
     width: 300px;
