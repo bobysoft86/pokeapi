@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="./js/pokeapi.js" defer></script>
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="./styles/magic/magic.css"/>
+    <link rel="stylesheet" href="./styles/pokeapi.css"/>
+    <div style="font-family: 'ghobi', sans-serif;">
+    </div>
+    </head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Pokedex</h1>
+            <ol id="pokedex"></ol>
+        </div>
+    </header>
+    <main class="infiniteScroll">
+        <section class="pokedex">
+            <div class="podekex_img_stats">
+                <div class=" pokedexDiv_img"> 
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" alt="">
+                </div>
+                <div class="pokedex_states">
+                    <ul class="pokedex_listaStats">     
+                    </ul>
+                </div>
+                <div class="container">
+                    <div class="searchInputBox">
+                        <input type="text" placeholder="NOMBRE POKEMON" class="pokedex pokedex_input" > 
+                        <a href="#" target="_blank" ></a>
+                        <ul class="container_suggestions">
+                        </ul>
+
+                    </div>
+                    <div class="contenedorBotones">
+                        <button class="pokedex pokedex_button">BUSCAR</button>
+                        <button class="pokedex pokedex_buttonSet">ENVIAR POKEDEX</button>
+                        
+                    </div>
+                </div>    
+            </div>
+        </section>
+        <section class=" magictime pokemonWrap">
+            
+        </section>
+        <section>
+           <div>
+            <button class="cargarMas"> Mas pokemon</button>
+        </div>
+        </section>
+    </main>
+</body>
+
+</html>
