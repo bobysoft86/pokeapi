@@ -12,13 +12,13 @@ const getAllPokeApi = async () => {
 const getStats = async (url) => {
   const response = await fetch(url);
   const resJson = await response.json();
-
+  const id = resJson.id;
   const name = resJson.name;
   const height = resJson.height;
   const weight = resJson.weight;
   const category = resJson.types[0].type.name;
 
-  const pokemonStats = { name, height, weight, category };
+  const pokemonStats = { name, height, weight, category, id };
 
   return pokemonStats;
 };
@@ -38,35 +38,38 @@ const wrapPokemons = async (baseDatos) => {
   for (const num in baseDatos) {
     let myPokemonWrap = document.body.querySelector(".pokemonWrap");
     let myDiv = document.createElement("div");
-    let png = await getIMG(baseDatos[num].url);
     let myPokeImg = document.createElement("img");
+    let png = await getIMG(baseDatos[num].url);
 
     myPokemonWrap.appendChild(myDiv);
 
     myDiv.setAttribute("class", "wrapImg");
     myDiv.appendChild(myPokeImg);
 
-    myPokeImg.setAttribute("src", "./styles/img/purepng.com-pokeballpokeballdevicepokemon-ballpokemon-capture-ball-17015278258688k78u.png");
+    myPokeImg.setAttribute(
+      "src",
+      "./styles/img/purepng.com-pokeballpokeballdevicepokemon-ballpokemon-capture-ball-17015278258688k78u.png"
+    );
     myPokeImg.setAttribute("class", "pokemonWrapImages");
     myDiv.classList.add("magictime", "tinUpIn");
-    setTimeout(function(){
-
+    setTimeout(function () {
+      //temporizador para la del pokemon imagen
       myPokeImg.setAttribute("src", png);
     }, 1100);
     let myPokeName = document.createElement("p");
     myPokeName.setAttribute("class", "myPokeName");
     myDiv.appendChild(myPokeName);
-
     let stats = await getStats(baseDatos[num].url); // no puedo conseguir el map
+    myDiv.classList.add(stats.category);
     myPokeName.style.fontSize = 3;
+    console.log(stats.id);
     myPokeName.innerText = `
+    id: ${stats.id}
     Name: ${stats.name}
     Height: ${stats.height / 10}m
     Weight: ${stats.weight / 10}kg
     Category: ${stats.category}
     `;
-    myDiv.classList.add(stats.category);
-
   }
 };
 
@@ -87,7 +90,7 @@ const pokedexPantalla = async (nombre, allPokeApi) => {
     let myPokedexImg = document.createElement("img");
     let png = await getIMG(result);
     myPokedexImg.setAttribute("src", png);
-    myPokedexImg.classList.add("magictime","vanishIn")
+    myPokedexImg.classList.add("magictime", "vanishIn");
     pokedexDivImg.appendChild(myPokedexImg);
 
     let stats = await getStats(result); // no puedo conseguir el map
@@ -139,19 +142,94 @@ const buscador = (allPokeApi) => {
   });
 
   function select(element) {
-  let selectUserData = element.textContent;
-  pokedexInput.value = selectUserData;
+    let selectUserData = element.textContent;
+    pokedexInput.value = selectUserData;
+  }
+};
+
+const wrapPokemonsClass = async (baseDatos, clase) => {
+  for (const num in baseDatos) {
+    let stats = await getStats(baseDatos[num].url);
+    let check = stats.category;
+
+    if (check == clase) {
+      //compruebo si es de la classe
+      let myPokemonWrap = document.body.querySelector(".pokemonWrap");
+      let myDiv = document.createElement("div");
+      let myPokeImg = document.createElement("img");
+      let png = await getIMG(baseDatos[num].url);
+
+      myPokemonWrap.appendChild(myDiv);
+
+      myDiv.setAttribute("class", "wrapImg");
+      myDiv.appendChild(myPokeImg);
+
+      myPokeImg.setAttribute(
+        "src",
+        "./styles/img/purepng.com-pokeballpokeballdevicepokemon-ballpokemon-capture-ball-17015278258688k78u.png"
+      );
+      myPokeImg.setAttribute("class", "pokemonWrapImages");
+      myDiv.classList.add("magictime", "tinUpIn");
+      setTimeout(function () {
+        //temporizador para la del pokemon imagen
+        myPokeImg.setAttribute("src", png);
+      }, 1100);
+      let myPokeName = document.createElement("p");
+      myPokeName.setAttribute("class", "myPokeName");
+      myDiv.appendChild(myPokeName);
+      let stats = await getStats(baseDatos[num].url); // no puedo conseguir el map
+      myDiv.classList.add(stats.category);
+      myPokeName.style.fontSize = 3;
+      myPokeName.innerText = `
+                id : ${stats.id}
+                Name: ${stats.name}
+                Height: ${stats.height / 10}m
+                Weight: ${stats.weight / 10}kg
+                Category: ${stats.category}
+                `;
+      console.log(stats);
+    }
   }
 };
 
 let final = 10;
+const masPokemonClass = async (clase) => {
+  const init = 10;
+
+  let url = `https://pokeapi.co/api/v2/pokemon/?limit=${init}&offset=${final}`;
+  let baseDatosMas = await getPokeApiMas(url);
+  final += 10;
+  wrapPokemonsClass(baseDatosMas.results, clase);
+};
+const classSelector = (tipo) => {
+  let clase = document.querySelectorAll(`.${tipo}`);
+  let wrap = document.querySelector(".pokemonWrap");
+  let clase1 = tipo;
+  wrap.innerHTML = "";
+
+  clase.forEach((carta) => wrap.appendChild(carta));
+
+  window.addEventListener("scroll", () => {
+    //     console.log(window.scrollY);
+    // console.log(window.innerHeight);
+    if (
+      window.scrollY + window.innerHeight >=
+      document.documentElement.scrollHeight
+    ) {
+      console.log(clase1);
+      masPokemonClass(clase1);
+      window.scrollTo(0, window.innerHeight - 1);
+    }
+  });
+};
+
 const masPokemon = async () => {
-  const init = 5;
+  const init = 10;
 
   let url = `https://pokeapi.co/api/v2/pokemon/?limit=${init}&offset=${final}`;
   let baseDatosMas = await getPokeApiMas(url);
   console.log(baseDatosMas.results);
-  final += 5;
+  final += 10;
   wrapPokemons(baseDatosMas.results);
 };
 
@@ -162,31 +240,42 @@ const init = async () => {
   let bottonPokedexSet = document.querySelector(".pokedex_buttonSet");
   let pokedexInput = document.querySelector(".pokedex_input");
   let bottonMasPokemon = document.querySelector(".cargarMas");
+  let bottonGrass = document.querySelector(".grass_select");
+  let bottonFire = document.querySelector(".fire_select");
+  let bottonwater = document.querySelector(".water_select");
+  let bottonbug = document.querySelector(".bug_select");
 
   bottonPokedex.addEventListener("click", function () {
     buscador(allPokeApi.results);
   });
-
   bottonPokedexSet.addEventListener("click", function () {
     pokedexPantalla(pokedexInput.value, allPokeApi.results);
   });
-
   bottonMasPokemon.addEventListener("click", function () {
     masPokemon();
+    window.addEventListener("scroll", () => {
+      if (
+        window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight
+      ) {
+        masPokemon();
+      }
+    });
   });
-  console.log(baseDatos.results);
-  wrapPokemons(baseDatos.results);
+  bottonGrass.addEventListener("click", function () {
+    classSelector("grass");
+  });
+  bottonFire.addEventListener("click", function () {
+    classSelector("fire");
+  });
+  bottonwater.addEventListener("click", function () {
+    classSelector("water");
+  });
+  bottonbug.addEventListener("click", function () {
+    classSelector("bug");
+  });
 
-  window.addEventListener("scroll", () => {
-    console.log(window.scrollY);
-    console.log(window.innerHeight);
-    if (
-      window.scrollY + window.innerHeight >=
-      document.documentElement.scrollHeight
-    ) {
-      masPokemon();
-    }
-  });
+  wrapPokemons(baseDatos.results);
 };
 
 init();
