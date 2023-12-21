@@ -244,7 +244,16 @@ const init = async () => {
   let bottonFire = document.querySelector(".fire_select");
   let bottonwater = document.querySelector(".water_select");
   let bottonbug = document.querySelector(".bug_select");
+  let bottondragon= document.querySelector(".dragon_select");
+  let bottonpoison= document.querySelector(".poison_select");
+  let bottonfairy= document.querySelector(".fairy_select");
+  let bottondark= document.querySelector(".dark_select");
 
+ 
+  
+  
+  
+  
   bottonPokedex.addEventListener("click", function () {
     buscador(allPokeApi.results);
   });
@@ -273,6 +282,18 @@ const init = async () => {
   });
   bottonbug.addEventListener("click", function () {
     classSelector("bug");
+  });
+  bottondark.addEventListener("click", function () {
+    classSelector("dark");
+  });
+  bottondragon.addEventListener("click", function () {
+    classSelector("dragon");
+  });
+  bottonfairy.addEventListener("click", function () {
+    classSelector("fairy");
+  });
+  bottonpoison.addEventListener("click", function () {
+    classSelector("poison");
   });
 
   wrapPokemons(baseDatos.results);
