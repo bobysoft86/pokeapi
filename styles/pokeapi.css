@@ -311,3 +311,47 @@ button, input {
     font-family: "ghobi", sans-serif;
   
   }
+
+  @media (max-width: 768px) {
+    body{
+     display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: space-around;
+    justify-content: space-evenly;
+    align-items: center;
+    max-width: 768px;
+    }
+  }
+
+
+  @media (max-width: 425px) {
+    body{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: space-around;
+    justify-content: space-evenly;
+    align-items: center;
+    max-width: 768px;
+    }
+    h1 {
+      font-size: 102px;
+    }
+  * {
+    margin: 4px;
+    padding: 1px;
+    font-family: "ghobi", sans-serif;
+    text-decoration: none;
+    margin-left: 9px;
+  }
+  .classSelect{
+    
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      align-content: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+}
